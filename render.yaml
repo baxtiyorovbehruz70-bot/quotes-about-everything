@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: quote-flashcard
+    runtime: node
+    plan: free
+    buildCommand: npm ci
+    startCommand: npm start
+    healthCheckPath: /healthz
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL      # paste your Neon connection string in the Render dashboard
+        sync: false
+      - key: ADMIN_PASSWORD    # choose a long password in the Render dashboard
+        sync: false
+      - key: SESSION_SECRET    # generated automatically by Render
+        generateValue: true
