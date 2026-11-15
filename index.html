@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quotes on Life, Love &amp; Existence</title>
+<meta name="description" content="Press the card. Receive a thought on life, love and existence.">
+<meta name="theme-color" content="#070e22">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230a1530'/%3E%3Cpath d='M16 5l8 11-8 11-8-11z' fill='%23f2a23a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy-950:#050a1a;
+  --navy-900:#070e22;
+  --navy-800:#0b1633;
+  --navy-700:#112250;
+  --gold:#f2a23a;
+  --gold-deep:#d9801c;
+  --gold-soft:#ffd08a;
+  --white:#ffffff;
+  --cream:#fff7e8;
+  --ink:#0c1a3d;
+  --muted:#5c6785;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{
+  margin:0;
+  min-height:100svh;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  font-family:'Cormorant Garamond',Georgia,'Times New Roman',serif;
+  color:var(--white);
+  background:
+    radial-gradient(900px 520px at 78% 8%, rgba(242,162,58,.20), transparent 60%),
+    radial-gradient(900px 560px at 14% 96%, rgba(242,162,58,.17), transparent 60%),
+    radial-gradient(1200px 800px at 50% 50%, var(--navy-700) 0%, var(--navy-800) 45%, var(--navy-950) 100%);
+  -webkit-tap-highlight-color:transparent;
+}
+
+/* ---------- background texture (echoes the orange streaks in the reference) ---------- */
+.streaks{
+  position:fixed; inset:0; pointer-events:none;
+  background:repeating-linear-gradient(180deg,
+    transparent 0 16px,
+    rgba(242,162,58,.075) 16px 17px,
+    rgba(255,255,255,.035) 17px 18px,
+    transparent 18px 40px);
+  -webkit-mask-image:radial-gradient(ellipse at 50% 50%, #000 0%, rgba(0,0,0,.5) 45%, transparent 78%);
+          mask-image:radial-gradient(ellipse at 50% 50%, #000 0%, rgba(0,0,0,.5) 45%, transparent 78%);
+}
+#sweeps{position:fixed; inset:0; width:100%; height:100%; pointer-events:none}
+
+/* ---------- card ---------- */
+.stage{position:relative; z-index:1; padding:20px; width:100%; display:grid; place-items:center}
+.scene{
+  width:min(92vw,660px);
+  height:clamp(380px,64svh,450px);
+  perspective:1800px;
+  transition:transform .35s ease;
+}
+@media (hover:hover){ .scene:hover{transform:translateY(-5px)} }
+.scene:active{transform:translateY(0) scale(.99)}
+
+.card{
+  position:relative; width:100%; height:100%;
+  transform-style:preserve-3d;
+  -webkit-transform-style:preserve-3d;
+  transition:transform .9s cubic-bezier(.22,.72,.18,1);
+  cursor:pointer;
+  outline:none;
+  border-radius:22px;
+}
+.card:focus-visible{box-shadow:0 0 0 3px var(--gold)}
+
+.face{
+  position:absolute; inset:0;
+  backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:22px;
+  display:flex; align-items:center; justify-content:center;
+  padding:clamp(26px,5.5vw,54px);
+  background:linear-gradient(158deg,#ffffff 0%, var(--cream) 62%, #ffefd2 100%);
+  box-shadow:
+    0 34px 90px rgba(0,0,0,.6),
+    0 0 60px rgba(242,162,58,.18),
+    0 0 0 1px rgba(242,162,58,.7),
+    inset 0 0 0 9px #ffffff,
+    inset 0 0 0 10px rgba(217,128,28,.6);
+}
+.face::before{
+  content:""; position:absolute; inset:19px; border-radius:13px;
+  border:1px solid rgba(217,128,28,.28); pointer-events:none;
+}
+.face::after{ /* gold crown line on top edge */
+  content:""; position:absolute; left:50%; top:0; transform:translateX(-50%);
+  width:38%; height:4px; border-radius:0 0 6px 6px;
+  background:linear-gradient(90deg,transparent,var(--gold),var(--gold-deep),var(--gold),transparent);
+}
+.face.back{transform:rotateY(180deg)}
+
+.content{
+  width:100%; max-height:100%;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; color:var(--ink);
+  animation:rise .7s .25s both;
+}
+@keyframes rise{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+
+.mark{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:clamp(3.4rem,9vw,5.2rem); line-height:.6; height:.42em;
+  color:var(--gold); font-weight:600; margin-bottom:.2em;
+  text-shadow:0 2px 0 rgba(217,128,28,.18);
+}
+.quote{
+  margin:.35em 0 0;
+  font-weight:600; font-size:clamp(1.45rem,3.9vw,2.25rem); line-height:1.32; letter-spacing:.005em;
+  text-wrap:balance;
+}
+.quote.long{font-size:clamp(1.25rem,3.2vw,1.8rem)}
+.quote.xl{font-size:clamp(1.1rem,2.7vw,1.5rem); line-height:1.38}
+
+.rule{
+  display:flex; align-items:center; gap:12px; margin:clamp(14px,3vw,24px) 0 clamp(10px,2vw,14px);
+  width:min(60%,220px);
+}
+.rule::before,.rule::after{content:""; flex:1; height:1px; background:linear-gradient(90deg,transparent,var(--gold-deep))}
+.rule::after{transform:scaleX(-1)}
+.rule i{width:7px; height:7px; background:var(--gold); transform:rotate(45deg); box-shadow:0 0 10px rgba(242,162,58,.7)}
+
+.author{
+  margin:0; font-family:'Cinzel',Georgia,serif; font-weight:600;
+  letter-spacing:.2em; text-transform:uppercase;
+  font-size:clamp(.72rem,1.9vw,.92rem); color:var(--gold-deep);
+}
+.note{
+  margin:.55em 0 0; font-style:italic; font-size:clamp(.85rem,2vw,1rem); color:var(--muted);
+}
+
+/* welcome face */
+.hello .label{
+  font-family:'Cinzel',Georgia,serif; letter-spacing:.32em; text-transform:uppercase;
+  font-size:clamp(.66rem,1.8vw,.82rem); color:var(--gold-deep); margin:0 0 1.1em; font-weight:600;
+}
+.hello .title{margin:.2em 0 0; font-weight:600; font-size:clamp(1.7rem,4.6vw,2.6rem); line-height:1.2}
+.hello .hint{
+  margin:1.4em 0 0; font-style:italic; font-size:clamp(1rem,2.4vw,1.25rem); color:var(--muted);
+  animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.55}50%{opacity:1}}
+
+.sr-only{position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap}
+
+/* ---------- admin ---------- */
+.lock{
+  position:fixed; right:14px; bottom:14px; z-index:2;
+  width:34px; height:34px; border-radius:50%; border:0; background:transparent; cursor:pointer;
+  color:var(--gold); opacity:.2; transition:opacity .25s; display:grid; place-items:center;
+}
+.lock:hover,.lock:focus-visible{opacity:.85; outline:none}
+.lock svg{width:16px; height:16px}
+
+.overlay{
+  position:fixed; inset:0; z-index:10; display:grid; place-items:center; padding:16px;
+  background:rgba(3,7,18,.78); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+.panel{
+  position:relative; width:min(560px,100%); max-height:92svh; overflow:auto;
+  background:linear-gradient(170deg,var(--navy-700),var(--navy-900));
+  border:1px solid rgba(242,162,58,.55); border-radius:18px; padding:26px 24px 24px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  font-family:system-ui,-apple-system,'Segoe UI',Roboto,sans-serif; font-size:15px; color:#e9edf8;
+}
+.panel h2{margin:0 0 4px; font-family:'Cinzel',Georgia,serif; letter-spacing:.14em; font-size:1.15rem; color:var(--gold); text-transform:uppercase}
+.panel h3{margin:22px 0 8px; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--gold-soft)}
+.panel .sub{margin:0 0 16px; color:#a8b2cf; font-size:.9rem}
+.x{position:absolute; top:10px; right:12px; background:none; border:0; color:#c9d1e8; font-size:26px; cursor:pointer; line-height:1}
+.x:hover{color:var(--gold)}
+.panel label{display:block; margin:10px 0 0; color:#c9d1e8; font-size:.85rem}
+.panel input,.panel textarea{
+  width:100%; margin-top:6px; padding:11px 12px; border-radius:10px;
+  border:1px solid rgba(255,255,255,.2); background:rgba(5,10,26,.6); color:#fff; font:inherit;
+}
+.panel textarea{resize:vertical; min-height:96px; line-height:1.45}
+.panel input:focus,.panel textarea:focus{outline:2px solid var(--gold); outline-offset:1px; border-color:transparent}
+.btn{
+  margin-top:12px; padding:10px 18px; border-radius:10px; border:0; cursor:pointer; font:inherit; font-weight:600;
+  color:#1a1000; background:linear-gradient(180deg,var(--gold),var(--gold-deep));
+}
+.btn:hover{filter:brightness(1.08)}
+.btn.ghost{background:transparent; color:#e9edf8; border:1px solid rgba(255,255,255,.3)}
+.btn.small{padding:6px 10px; font-size:.8rem; margin:0}
+.row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+.msg{margin:10px 0 0; font-size:.88rem; min-height:1.2em; color:#a8b2cf}
+.msg.err{color:#ff9d8a}
+.msg.ok{color:#8fe3b0}
+.list{list-style:none; margin:0; padding:0; max-height:220px; overflow:auto; border:1px solid rgba(255,255,255,.12); border-radius:10px}
+.list li{display:flex; gap:10px; align-items:flex-start; justify-content:space-between; padding:10px 12px; border-bottom:1px solid rgba(255,255,255,.08)}
+.list li:last-child{border-bottom:0}
+.list .t{font-size:.9rem; line-height:1.35}
+.list .a{display:block; color:var(--gold-soft); font-size:.78rem; margin-top:2px}
+.empty{padding:12px; color:#a8b2cf; font-size:.9rem}
+
+@media (prefers-reduced-motion:reduce){
+  .card{transition-duration:.01s}
+  .content{animation:none}
+  .hello .hint{animation:none}
+  .scene{transition:none}
+}
+</style>
+</head>
+<body>
+
+<div class="streaks" aria-hidden="true"></div>
+<svg id="sweeps" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true"></svg>
+
+<main class="stage">
+  <div class="scene" id="scene">
+    <div class="card" id="card" tabindex="0" role="button"
+         aria-label="Flash card. Press to reveal a random quote.">
+      <div class="face front">
+        <div class="content hello" id="faceA">
+          <p class="label">Life &middot; Love &middot; Existence</p>
+          <div class="mark" aria-hidden="true">&ldquo;</div>
+          <p class="title">Press the card</p>
+          <p class="hint">and let a thought find you</p>
+        </div>
+      </div>
+      <div class="face back">
+        <div class="content" id="faceB"></div>
+      </div>
+    </div>
+  </div>
+  <div class="sr-only" id="live" aria-live="polite"></div>
+</main>
+
+<button class="lock" id="lockBtn" aria-label="Admin sign in" title="Admin">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>
+</button>
+
+<!-- ============ ADMIN PANEL ============ -->
+<div class="overlay" id="overlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="ptitle">
+    <button class="x" id="closeAdmin" aria-label="Close">&times;</button>
+    <h2 id="ptitle">Admin</h2>
+
+    <form id="loginForm" autocomplete="off">
+      <p class="sub">Sign in to add or manage quotes.</p>
+      <label for="pw">Password
+        <input type="password" id="pw" autocomplete="current-password" required>
+      </label>
+      <button class="btn" type="submit">Sign in</button>
+      <p class="msg" id="loginMsg" role="alert"></p>
+    </form>
+
+    <div id="adminArea" hidden>
+      <p class="sub" id="stat"></p>
+
+      <h3>Add quotes</h3>
+      <p class="sub" style="margin-bottom:8px">One quote per line, written as <b>&ldquo;Quote&rdquo; &mdash; Author</b>. Numbers at the start of a line are ignored automatically. A note in brackets, like (attribution disputed), is shown under the author.</p>
+      <textarea id="bulk" placeholder="&quot;Your quote goes here.&quot; — Author Name"></textarea>
+      <div class="row">
+        <button class="btn" id="addBtn" type="button">Add quotes</button>
+        <span class="msg" id="addMsg" role="status"></span>
+      </div>
+
+      <h3>All quotes</h3>
+      <input type="search" id="filter" placeholder="Search by text or author" aria-label="Search quotes">
+      <ul class="list" id="customList" style="margin-top:10px"></ul>
+      <p class="sub" style="margin:14px 0 0">The admin password is set in your hosting settings (ADMIN_PASSWORD). Change it there.</p>
+
+      <div class="row" style="margin-top:22px;justify-content:space-between">
+        <button class="btn ghost" id="logout" type="button">Sign out</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
